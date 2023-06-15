@@ -16,7 +16,7 @@ HAB     hab;
 HWND    hwndFrame;
 PFNWP   pfnwpFrame;
 
-#define STAR_CLASSNAME "STAR"
+#define STAR_CLASSNAME (PCSZ) "STAR"
 
 // Local function prototype declarations
 
@@ -35,7 +35,7 @@ void DrawStar( HWND hwnd , ULONG lFlags );
 //
 //
 // --------------------------------------------------------------------------
-int cdecl main(VOID)
+int main(VOID)
 {
    HMQ hmq;
    HWND hwndclient;
@@ -45,12 +45,12 @@ int cdecl main(VOID)
                            FCF_TASKLIST   | FCF_TITLEBAR      | FCF_SYSMENU |
                            FCF_SIZEBORDER | FCF_MINMAX ;
 
-   hab = WinInitialize( (USHORT)NULL );
+   hab = WinInitialize( 0 );
 
    hmq=WinCreateMsgQueue( hab,0 );
 
    WinRegisterClass( hab
-                   , STAR_CLASSNAME
+                   , (PCSZ) STAR_CLASSNAME
                    , (PFNWP)ClientWndProc
                    , (ULONG)CS_SIZEREDRAW
                    , (USHORT)256 );
@@ -59,7 +59,7 @@ int cdecl main(VOID)
                                  ,  0UL
                                  ,  &flCreateFlags
                                  ,  STAR_CLASSNAME
-                                 ,  "Star- Alternate/winding mode fills"
+                                 , (PCSZ)  "Star- Alternate/winding mode fills"
                                  ,  WS_VISIBLE
                                  ,  (HMODULE)0
                                  ,  0
@@ -125,13 +125,14 @@ MRESULT EXPENTRY ClientWndProc(HWND hwnd, USHORT msg, MPARAM mp1, MPARAM mp2)
        return( WinDefWindowProc( hwnd, msg, mp1, mp2 )) ;
      }
    }
+   return 0;
 }
 
 void DrawStar( HWND hwnd, ULONG lFlags )
 {
   HPS hps;
-  POINTL aptl1[3] = { 0,30,100,30,50,120 } ;
-  POINTL aptl2[3] = { 50,0,100,90,0,90 };
+  POINTL aptl1[3] = { {0,30},{100,30},{50,120} } ;
+  POINTL aptl2[3] = { {50,0},{100,90},{0,90} };
 
   hps = WinGetPS( hwnd );
 
