@@ -14,7 +14,7 @@ COMPILE TOOLS
 AUTHORS
 ===============
 * Martin Iturbide (2023)
-* IBM Corporation
+* Kelvin R. Lawrence
 
 LINKS
 ===============
